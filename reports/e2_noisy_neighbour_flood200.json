@@ -1,0 +1,114 @@
+{
+ "setup": "eta fixed at 1 replica (no HPA); tenants B and C at 30 req/s each; tenant A floods at 200 req/s with a quota of 50 req/s; 60 s per phase, first 10 s skipped",
+ "baseline_no_flood": {
+  "phase_wall_seconds": 60.0,
+  "tenant-b": {
+   "sent": 1500,
+   "ok": 1500,
+   "errors": 0,
+   "throttled": 0,
+   "error_rate": 0.0,
+   "p50_ms": 7.4,
+   "p99_ms": 12.3
+  },
+  "tenant-c": {
+   "sent": 1500,
+   "ok": 1500,
+   "errors": 0,
+   "throttled": 0,
+   "error_rate": 0.0,
+   "p50_ms": 7.4,
+   "p99_ms": 12.6
+  }
+ },
+ "flood_quotas_on": {
+  "phase_wall_seconds": 161.5,
+  "tenant-a": {
+   "sent": 10071,
+   "ok": 6548,
+   "errors": 1,
+   "throttled": 3522,
+   "error_rate": 0.0001,
+   "p50_ms": 12424.7,
+   "p99_ms": 83849.3
+  },
+  "tenant-b": {
+   "sent": 1510,
+   "ok": 1510,
+   "errors": 0,
+   "throttled": 0,
+   "error_rate": 0.0,
+   "p50_ms": 12971.7,
+   "p99_ms": 89091.5
+  },
+  "tenant-c": {
+   "sent": 1510,
+   "ok": 1510,
+   "errors": 0,
+   "throttled": 0,
+   "error_rate": 0.0,
+   "p50_ms": 13310.5,
+   "p99_ms": 93579.0
+  }
+ },
+ "baseline_no_flood_after_restart": {
+  "phase_wall_seconds": 60.0,
+  "tenant-b": {
+   "sent": 1500,
+   "ok": 1500,
+   "errors": 0,
+   "throttled": 0,
+   "error_rate": 0.0,
+   "p50_ms": 8.0,
+   "p99_ms": 13.2
+  },
+  "tenant-c": {
+   "sent": 1500,
+   "ok": 1500,
+   "errors": 0,
+   "throttled": 0,
+   "error_rate": 0.0,
+   "p50_ms": 8.0,
+   "p99_ms": 13.2
+  }
+ },
+ "flood_quotas_off": {
+  "phase_wall_seconds": 162.7,
+  "tenant-a": {
+   "sent": 10042,
+   "ok": 10042,
+   "errors": 0,
+   "throttled": 0,
+   "error_rate": 0.0,
+   "p50_ms": 12880.6,
+   "p99_ms": 81885.0
+  },
+  "tenant-b": {
+   "sent": 1506,
+   "ok": 1505,
+   "errors": 1,
+   "throttled": 0,
+   "error_rate": 0.0007,
+   "p50_ms": 13103.5,
+   "p99_ms": 78640.0
+  },
+  "tenant-c": {
+   "sent": 1506,
+   "ok": 1506,
+   "errors": 0,
+   "throttled": 0,
+   "error_rate": 0.0,
+   "p50_ms": 13021.6,
+   "p99_ms": 81769.5
+  }
+ },
+ "flood_quotas_on_p99_vs_baseline_pct": {
+  "tenant-b": 724221.1,
+  "tenant-c": 742590.5
+ },
+ "flood_quotas_off_p99_vs_baseline_pct": {
+  "tenant-b": 639249.6,
+  "tenant-c": 648864.3
+ },
+ "_seconds": 481.6
+}

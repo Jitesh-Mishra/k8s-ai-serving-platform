@@ -24,7 +24,7 @@ for name, t in TH.items():
     plt.rcParams.update({"font.size": 10, "axes.edgecolor": t["ink2"], "axes.labelcolor": t["ink"], "xtick.color": t["ink2"],
                          "ytick.color": t["ink2"], "text.color": t["ink"]})
     fig, (a1, a2) = plt.subplots(1, 2, figsize=(12, 3.8), facecolor=t["bg"], gridspec_kw={"width_ratios": [1.15, 1]})
-    for i, (k, lab) in enumerate([("single_pod", "1 pod, no autoscaling"), ("hpa", "HPA (RPS + CPU)")]):
+    for i, (k, lab) in enumerate([("single_pod", "1 pod, no autoscaling"), ("hpa", "HPA (req/s metric)")]):
         rows = e1[k]
         a1.plot([r["target_rps"] for r in rows], [r["p99_ms"] or float("nan") for r in rows], "o-", color=t["c"][i], label=lab, lw=2)
     a1.axhline(100, color=t["ink2"], ls="--", lw=1)

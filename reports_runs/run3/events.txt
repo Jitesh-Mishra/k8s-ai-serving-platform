@@ -1,0 +1,175 @@
+LAST SEEN   TYPE      REASON              OBJECT                           MESSAGE
+26m         Normal    SuccessfulCreate    replicaset/gateway-559448fc5d    Created pod: gateway-559448fc5d-7mxmq
+26m         Normal    Created             pod/gateway-559448fc5d-d8f4j     Container created
+26m         Normal    SuccessfulCreate    replicaset/worker-f4848486c      Created pod: worker-f4848486c-z9cgs
+26m         Normal    SuccessfulCreate    replicaset/worker-f4848486c      Created pod: worker-f4848486c-msh52
+26m         Normal    SuccessfulCreate    replicaset/worker-f4848486c      Created pod: worker-f4848486c-zzbsb
+26m         Normal    Pulled              pod/gateway-559448fc5d-7mxmq     Container image "aiserve:dev" already present on machine and can be accessed by the pod
+26m         Normal    Scheduled           pod/eta-55bf45845c-5zhwj         Successfully assigned ai/eta-55bf45845c-5zhwj to ai-control-plane
+26m         Normal    Pulled              pod/eta-55bf45845c-5zhwj         Container image "aiserve:dev" already present on machine and can be accessed by the pod
+26m         Normal    Created             pod/eta-55bf45845c-5zhwj         Container created
+26m         Normal    Scheduled           pod/redis-75fb586b75-tlklf       Successfully assigned ai/redis-75fb586b75-tlklf to ai-control-plane
+26m         Normal    Created             pod/gateway-559448fc5d-7mxmq     Container created
+26m         Normal    SuccessfulCreate    replicaset/postgres-65bd685878   Created pod: postgres-65bd685878-h96f2
+26m         Normal    Scheduled           pod/gateway-559448fc5d-d8f4j     Successfully assigned ai/gateway-559448fc5d-d8f4j to ai-control-plane
+26m         Normal    Scheduled           pod/worker-f4848486c-zzbsb       Successfully assigned ai/worker-f4848486c-zzbsb to ai-control-plane
+26m         Normal    Pulled              pod/gateway-559448fc5d-d8f4j     Container image "aiserve:dev" already present on machine and can be accessed by the pod
+26m         Normal    Created             pod/postgres-65bd685878-h96f2    Container created
+26m         Normal    Pulled              pod/redis-75fb586b75-tlklf       Container image "redis:7-alpine" already present on machine and can be accessed by the pod
+26m         Normal    ScalingReplicaSet   deployment/postgres              Scaled up replica set postgres-65bd685878 from 0 to 1
+26m         Normal    ScalingReplicaSet   deployment/eta                   Scaled up replica set eta-55bf45845c from 0 to 1
+26m         Normal    Pulled              pod/postgres-65bd685878-h96f2    Container image "postgres:16-alpine" already present on machine and can be accessed by the pod
+26m         Normal    Scheduled           pod/gateway-559448fc5d-7mxmq     Successfully assigned ai/gateway-559448fc5d-7mxmq to ai-control-plane
+26m         Normal    Scheduled           pod/worker-f4848486c-z9cgs       Successfully assigned ai/worker-f4848486c-z9cgs to ai-control-plane
+26m         Normal    SuccessfulCreate    replicaset/gateway-559448fc5d    Created pod: gateway-559448fc5d-d8f4j
+26m         Normal    SuccessfulCreate    replicaset/eta-55bf45845c        Created pod: eta-55bf45845c-5zhwj
+26m         Normal    ScalingReplicaSet   deployment/gateway               Scaled up replica set gateway-559448fc5d from 0 to 2
+26m         Normal    Scheduled           pod/worker-f4848486c-msh52       Successfully assigned ai/worker-f4848486c-msh52 to ai-control-plane
+26m         Normal    ScalingReplicaSet   deployment/redis                 Scaled up replica set redis-75fb586b75 from 0 to 1
+26m         Normal    SuccessfulCreate    replicaset/redis-75fb586b75      Created pod: redis-75fb586b75-tlklf
+26m         Normal    Scheduled           pod/postgres-65bd685878-h96f2    Successfully assigned ai/postgres-65bd685878-h96f2 to ai-control-plane
+26m         Normal    Created             pod/redis-75fb586b75-tlklf       Container created
+26m         Normal    ScalingReplicaSet   deployment/worker                Scaled up replica set worker-f4848486c from 0 to 3
+26m         Normal    Started             pod/gateway-559448fc5d-d8f4j     Container started
+26m         Normal    Started             pod/redis-75fb586b75-tlklf       Container started
+26m         Normal    Started             pod/gateway-559448fc5d-7mxmq     Container started
+26m         Normal    Started             pod/postgres-65bd685878-h96f2    Container started
+26m         Normal    Started             pod/eta-55bf45845c-5zhwj         Container started
+26m         Warning   Unhealthy           pod/postgres-65bd685878-h96f2    Readiness probe failed: /var/run/postgresql:5432 - no response
+26m         Normal    Pulled              pod/worker-f4848486c-z9cgs       Container image "aiserve:dev" already present on machine and can be accessed by the pod
+26m         Normal    Started             pod/worker-f4848486c-z9cgs       Container started
+26m         Normal    Started             pod/worker-f4848486c-zzbsb       Container started
+26m         Normal    Pulled              pod/worker-f4848486c-msh52       Container image "aiserve:dev" already present on machine and can be accessed by the pod
+26m         Normal    Created             pod/worker-f4848486c-msh52       Container created
+26m         Normal    Created             pod/worker-f4848486c-zzbsb       Container created
+26m         Normal    Pulled              pod/worker-f4848486c-zzbsb       Container image "aiserve:dev" already present on machine and can be accessed by the pod
+26m         Normal    Started             pod/worker-f4848486c-msh52       Container started
+26m         Normal    Created             pod/worker-f4848486c-z9cgs       Container created
+26m         Warning   Unhealthy           pod/gateway-559448fc5d-d8f4j     Readiness probe failed: Get "http://10.244.0.21:8000/healthz": dial tcp 10.244.0.21:8000: connect: connection refused
+26m         Warning   Unhealthy           pod/eta-55bf45845c-5zhwj         Readiness probe failed: Get "http://10.244.0.17:8000/ready": dial tcp 10.244.0.17:8000: connect: connection refused
+26m         Warning   Unhealthy           pod/gateway-559448fc5d-7mxmq     Readiness probe failed: Get "http://10.244.0.16:8000/healthz": dial tcp 10.244.0.16:8000: connect: connection refused
+25m         Normal    Scheduled           pod/gateway-559448fc5d-d8t8c     Successfully assigned ai/gateway-559448fc5d-d8t8c to ai-control-plane
+25m         Normal    SuccessfulCreate    replicaset/gateway-559448fc5d    Created pod: gateway-559448fc5d-d8t8c
+25m         Normal    ScalingReplicaSet   deployment/gateway               Scaled up replica set gateway-559448fc5d from 2 to 3
+25m         Warning   Unhealthy           pod/gateway-559448fc5d-d8t8c     Readiness probe failed: Get "http://10.244.0.23:8000/healthz": dial tcp 10.244.0.23:8000: connect: connection refused
+25m         Normal    Pulled              pod/gateway-559448fc5d-d8t8c     Container image "aiserve:dev" already present on machine and can be accessed by the pod
+25m         Normal    Created             pod/gateway-559448fc5d-d8t8c     Container created
+25m         Normal    Started             pod/gateway-559448fc5d-d8t8c     Container started
+14m         Normal    Scheduled           pod/eta-55bf45845c-bgl87         Successfully assigned ai/eta-55bf45845c-bgl87 to ai-control-plane
+14m         Normal    SuccessfulRescale   horizontalpodautoscaler/eta      New size: 2; reason: pods metric eta_requests_per_second above target
+14m         Normal    SuccessfulCreate    replicaset/eta-55bf45845c        Created pod: eta-55bf45845c-bgl87
+14m         Normal    Created             pod/eta-55bf45845c-bgl87         Container created
+14m         Normal    Pulled              pod/eta-55bf45845c-bgl87         Container image "aiserve:dev" already present on machine and can be accessed by the pod
+14m         Normal    Started             pod/eta-55bf45845c-bgl87         Container started
+13m         Normal    SuccessfulCreate    replicaset/eta-55bf45845c        Created pod: eta-55bf45845c-lv87q
+13m         Normal    ScalingReplicaSet   deployment/eta                   Scaled up replica set eta-55bf45845c from 2 to 3
+13m         Normal    Scheduled           pod/eta-55bf45845c-lv87q         Successfully assigned ai/eta-55bf45845c-lv87q to ai-control-plane
+13m         Normal    SuccessfulRescale   horizontalpodautoscaler/eta      New size: 3; reason: pods metric eta_requests_per_second above target
+13m         Normal    Started             pod/eta-55bf45845c-lv87q         Container started
+13m         Normal    Created             pod/eta-55bf45845c-lv87q         Container created
+13m         Normal    Pulled              pod/eta-55bf45845c-lv87q         Container image "aiserve:dev" already present on machine and can be accessed by the pod
+13m         Normal    Scheduled           pod/eta-55bf45845c-tmjq4         Successfully assigned ai/eta-55bf45845c-tmjq4 to ai-control-plane
+13m         Normal    ScalingReplicaSet   deployment/eta                   Scaled up replica set eta-55bf45845c from 3 to 4
+13m         Normal    SuccessfulCreate    replicaset/eta-55bf45845c        Created pod: eta-55bf45845c-tmjq4
+13m         Normal    SuccessfulRescale   horizontalpodautoscaler/eta      New size: 4; reason: pods metric eta_requests_per_second above target
+13m         Normal    Pulled              pod/eta-55bf45845c-tmjq4         Container image "aiserve:dev" already present on machine and can be accessed by the pod
+13m         Normal    Created             pod/eta-55bf45845c-tmjq4         Container created
+13m         Normal    Started             pod/eta-55bf45845c-tmjq4         Container started
+12m         Normal    SuccessfulRescale   horizontalpodautoscaler/eta      New size: 5; reason: pods metric eta_requests_per_second above target
+12m         Normal    SuccessfulCreate    replicaset/eta-55bf45845c        Created pod: eta-55bf45845c-njnxt
+12m         Normal    ScalingReplicaSet   deployment/eta                   Scaled up replica set eta-55bf45845c from 4 to 5
+12m         Normal    Scheduled           pod/eta-55bf45845c-njnxt         Successfully assigned ai/eta-55bf45845c-njnxt to ai-control-plane
+12m         Normal    Pulled              pod/eta-55bf45845c-njnxt         Container image "aiserve:dev" already present on machine and can be accessed by the pod
+12m         Normal    Created             pod/eta-55bf45845c-njnxt         Container created
+12m         Normal    Started             pod/eta-55bf45845c-njnxt         Container started
+12m         Warning   Unhealthy           pod/eta-55bf45845c-njnxt         Readiness probe failed: Get "http://10.244.0.27:8000/ready": dial tcp 10.244.0.27:8000: connect: connection refused
+11m         Normal    Pulled              pod/eta-55bf45845c-5pzwx         Container image "aiserve:dev" already present on machine and can be accessed by the pod
+11m         Normal    Scheduled           pod/eta-55bf45845c-5pzwx         Successfully assigned ai/eta-55bf45845c-5pzwx to ai-control-plane
+11m         Normal    SuccessfulRescale   horizontalpodautoscaler/eta      New size: 6; reason: pods metric eta_requests_per_second above target
+11m         Normal    SuccessfulCreate    replicaset/eta-55bf45845c        Created pod: eta-55bf45845c-5pzwx
+11m         Normal    ScalingReplicaSet   deployment/eta                   Scaled up replica set eta-55bf45845c from 5 to 6
+11m         Normal    Created             pod/eta-55bf45845c-5pzwx         Container created
+11m         Normal    Started             pod/eta-55bf45845c-5pzwx         Container started
+11m         Warning   Unhealthy           pod/eta-55bf45845c-5pzwx         Readiness probe failed: Get "http://10.244.0.28:8000/ready": dial tcp 10.244.0.28:8000: connect: connection refused
+10m         Normal    SuccessfulDelete    replicaset/eta-55bf45845c        Deleted pod: eta-55bf45845c-njnxt
+10m         Normal    ScalingReplicaSet   deployment/eta                   Scaled down replica set eta-55bf45845c from 6 to 3
+10m         Normal    SuccessfulRescale   horizontalpodautoscaler/eta      New size: 3; reason: All metrics below target
+10m         Normal    Killing             pod/eta-55bf45845c-lv87q         Stopping container eta
+10m         Normal    SuccessfulDelete    replicaset/eta-55bf45845c        Deleted pod: eta-55bf45845c-5pzwx
+10m         Normal    SuccessfulDelete    replicaset/eta-55bf45845c        Deleted pod: eta-55bf45845c-lv87q
+10m         Normal    Killing             pod/eta-55bf45845c-njnxt         Stopping container eta
+10m         Normal    Killing             pod/eta-55bf45845c-5pzwx         Stopping container eta
+10m         Warning   Unhealthy           pod/eta-55bf45845c-lv87q         Readiness probe failed: Get "http://10.244.0.25:8000/ready": dial tcp 10.244.0.25:8000: connect: connection refused
+8m58s       Normal    ScalingReplicaSet   deployment/eta                   Scaled down replica set eta-55bf45845c from 3 to 2
+8m58s       Normal    Killing             pod/eta-55bf45845c-tmjq4         Stopping container eta
+8m58s       Normal    SuccessfulDelete    replicaset/eta-55bf45845c        Deleted pod: eta-55bf45845c-tmjq4
+8m57s       Normal    Killing             pod/eta-55bf45845c-bgl87         Stopping container eta
+8m57s       Normal    SuccessfulDelete    replicaset/eta-55bf45845c        Deleted pod: eta-55bf45845c-bgl87
+8m57s       Normal    ScalingReplicaSet   deployment/eta                   Scaled down replica set eta-55bf45845c from 2 to 1
+8m47s       Warning   Unhealthy           pod/eta-55bf45845c-tmjq4         Readiness probe failed: Get "http://10.244.0.26:8000/ready": dial tcp 10.244.0.26:8000: connect: connection refused
+8m46s       Warning   Unhealthy           pod/eta-55bf45845c-bgl87         Readiness probe failed: Get "http://10.244.0.24:8000/ready": dial tcp 10.244.0.24:8000: connect: connection refused
+5m14s       Normal    Created             pod/gateway-6558698dcb-vpcmd     Container created
+5m14s       Normal    Scheduled           pod/gateway-6558698dcb-vpcmd     Successfully assigned ai/gateway-6558698dcb-vpcmd to ai-control-plane
+5m14s       Normal    ScalingReplicaSet   deployment/gateway               Scaled up replica set gateway-6558698dcb from 0 to 1
+5m14s       Normal    SuccessfulCreate    replicaset/gateway-6558698dcb    Created pod: gateway-6558698dcb-vpcmd
+5m14s       Warning   Unhealthy           pod/gateway-6558698dcb-vpcmd     Readiness probe failed: Get "http://10.244.0.29:8000/healthz": dial tcp 10.244.0.29:8000: connect: connection refused
+5m14s       Normal    Started             pod/gateway-6558698dcb-vpcmd     Container started
+5m14s       Normal    Pulled              pod/gateway-6558698dcb-vpcmd     Container image "aiserve:dev" already present on machine and can be accessed by the pod
+5m13s       Normal    SuccessfulDelete    replicaset/gateway-559448fc5d    Deleted pod: gateway-559448fc5d-7mxmq
+5m13s       Normal    Killing             pod/gateway-559448fc5d-7mxmq     Stopping container gateway
+5m13s       Normal    ScalingReplicaSet   deployment/gateway               Scaled down replica set gateway-559448fc5d from 3 to 2
+5m13s       Normal    ScalingReplicaSet   deployment/gateway               Scaled up replica set gateway-6558698dcb from 1 to 2
+5m12s       Normal    Created             pod/gateway-6558698dcb-qm9lr     Container created
+5m12s       Normal    Started             pod/gateway-6558698dcb-qm9lr     Container started
+5m12s       Warning   Unhealthy           pod/gateway-6558698dcb-qm9lr     Readiness probe failed: Get "http://10.244.0.30:8000/healthz": dial tcp 10.244.0.30:8000: connect: connection refused
+5m12s       Normal    Pulled              pod/gateway-6558698dcb-qm9lr     Container image "aiserve:dev" already present on machine and can be accessed by the pod
+5m12s       Normal    Scheduled           pod/gateway-6558698dcb-qm9lr     Successfully assigned ai/gateway-6558698dcb-qm9lr to ai-control-plane
+5m12s       Normal    SuccessfulCreate    replicaset/gateway-6558698dcb    Created pod: gateway-6558698dcb-qm9lr
+5m11s       Normal    ScalingReplicaSet   deployment/gateway               Scaled down replica set gateway-559448fc5d from 2 to 1
+5m11s       Normal    Killing             pod/gateway-559448fc5d-d8f4j     Stopping container gateway
+5m11s       Normal    SuccessfulDelete    replicaset/gateway-559448fc5d    Deleted pod: gateway-559448fc5d-d8f4j
+5m10s       Warning   Unhealthy           pod/gateway-6558698dcb-54jnl     Readiness probe failed: Get "http://10.244.0.31:8000/healthz": dial tcp 10.244.0.31:8000: connect: connection refused
+5m10s       Normal    SuccessfulCreate    replicaset/gateway-6558698dcb    Created pod: gateway-6558698dcb-54jnl
+5m10s       Normal    ScalingReplicaSet   deployment/gateway               Scaled up replica set gateway-6558698dcb from 2 to 3
+5m10s       Normal    Started             pod/gateway-6558698dcb-54jnl     Container started
+5m10s       Normal    Created             pod/gateway-6558698dcb-54jnl     Container created
+5m10s       Normal    Pulled              pod/gateway-6558698dcb-54jnl     Container image "aiserve:dev" already present on machine and can be accessed by the pod
+5m10s       Normal    Scheduled           pod/gateway-6558698dcb-54jnl     Successfully assigned ai/gateway-6558698dcb-54jnl to ai-control-plane
+5m9s        Normal    ScalingReplicaSet   deployment/gateway               Scaled down replica set gateway-559448fc5d from 1 to 0
+5m9s        Normal    SuccessfulDelete    replicaset/gateway-559448fc5d    Deleted pod: gateway-559448fc5d-d8t8c
+5m8s        Normal    Killing             pod/gateway-559448fc5d-d8t8c     Stopping container gateway
+3m56s       Warning   Unhealthy           pod/eta-55bf45845c-5zhwj         Readiness probe failed: Get "http://10.244.0.17:8000/ready": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+74s         Normal    Started             pod/gateway-559448fc5d-gn2jv     Container started
+74s         Normal    Pulled              pod/gateway-559448fc5d-gn2jv     Container image "aiserve:dev" already present on machine and can be accessed by the pod
+74s         Normal    Created             pod/eta-55bf45845c-9wxlx         Container created
+74s         Normal    Scheduled           pod/eta-55bf45845c-9wxlx         Successfully assigned ai/eta-55bf45845c-9wxlx to ai-control-plane
+74s         Normal    SuccessfulCreate    replicaset/eta-55bf45845c        Created pod: eta-55bf45845c-9wxlx
+74s         Normal    Scheduled           pod/gateway-559448fc5d-gn2jv     Successfully assigned ai/gateway-559448fc5d-gn2jv to ai-control-plane
+74s         Normal    Pulled              pod/eta-55bf45845c-9wxlx         Container image "aiserve:dev" already present on machine and can be accessed by the pod
+74s         Normal    Created             pod/gateway-559448fc5d-gn2jv     Container created
+74s         Normal    ScalingReplicaSet   deployment/eta                   Scaled up replica set eta-55bf45845c from 1 to 2
+74s         Normal    ScalingReplicaSet   deployment/gateway               Scaled up replica set gateway-559448fc5d from 0 to 1
+74s         Normal    SuccessfulCreate    replicaset/gateway-559448fc5d    Created pod: gateway-559448fc5d-gn2jv
+73s         Normal    SuccessfulDelete    replicaset/gateway-6558698dcb    Deleted pod: gateway-6558698dcb-54jnl
+73s         Normal    ScalingReplicaSet   deployment/gateway               Scaled down replica set gateway-6558698dcb from 3 to 2
+73s         Normal    Killing             pod/gateway-6558698dcb-54jnl     Stopping container gateway
+73s         Normal    Started             pod/eta-55bf45845c-9wxlx         Container started
+73s         Normal    ScalingReplicaSet   deployment/gateway               Scaled up replica set gateway-559448fc5d from 1 to 2
+73s         Normal    SuccessfulCreate    replicaset/gateway-559448fc5d    Created pod: gateway-559448fc5d-7hxbw
+73s         Normal    Scheduled           pod/gateway-559448fc5d-7hxbw     Successfully assigned ai/gateway-559448fc5d-7hxbw to ai-control-plane
+72s         Normal    Created             pod/gateway-559448fc5d-7hxbw     Container created
+72s         Normal    Pulled              pod/gateway-559448fc5d-7hxbw     Container image "aiserve:dev" already present on machine and can be accessed by the pod
+72s         Warning   Unhealthy           pod/gateway-559448fc5d-7hxbw     Readiness probe failed: Get "http://10.244.0.34:8000/healthz": dial tcp 10.244.0.34:8000: connect: connection refused
+72s         Normal    Started             pod/gateway-559448fc5d-7hxbw     Container started
+71s         Normal    Scheduled           pod/gateway-559448fc5d-jscjn     Successfully assigned ai/gateway-559448fc5d-jscjn to ai-control-plane
+71s         Normal    SuccessfulDelete    replicaset/gateway-6558698dcb    Deleted pod: gateway-6558698dcb-qm9lr
+71s         Normal    Killing             pod/gateway-6558698dcb-qm9lr     Stopping container gateway
+71s         Normal    SuccessfulCreate    replicaset/gateway-559448fc5d    Created pod: gateway-559448fc5d-jscjn
+70s         Normal    Pulled              pod/gateway-559448fc5d-jscjn     Container image "aiserve:dev" already present on machine and can be accessed by the pod
+70s         Normal    Created             pod/gateway-559448fc5d-jscjn     Container created
+70s         Normal    Started             pod/gateway-559448fc5d-jscjn     Container started
+70s         Warning   Unhealthy           pod/gateway-559448fc5d-jscjn     Readiness probe failed: Get "http://10.244.0.35:8000/healthz": dial tcp 10.244.0.35:8000: connect: connection refused
+69s         Warning   Unhealthy           pod/eta-55bf45845c-9wxlx         Readiness probe failed: Get "http://10.244.0.32:8000/ready": dial tcp 10.244.0.32:8000: connect: connection refused
+69s         Normal    SuccessfulDelete    replicaset/gateway-6558698dcb    Deleted pod: gateway-6558698dcb-vpcmd
+69s         Normal    Killing             pod/gateway-6558698dcb-vpcmd     Stopping container gateway
+69s         Normal    ScalingReplicaSet   deployment/gateway               (combined from similar events): Scaled down replica set gateway-6558698dcb from 1 to 0
