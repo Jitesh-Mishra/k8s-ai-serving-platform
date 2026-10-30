@@ -1,0 +1,506 @@
+{
+ "steps": "setWeight 20, pause 20 s, setWeight 60, pause 20 s, 100 (replica-weighted, 5 replicas, maxSurge 1, maxUnavailable 0)",
+ "load": "Locust, 60 users x 1 req/s, 150 s; rollout triggered at 20 s",
+ "canary_v1_to_v2_with_prestop": {
+  "to_version": "v2",
+  "prestop_seconds_on_old_pods": 10,
+  "requests": 9000,
+  "failed": 241,
+  "p99_ms": 120.0,
+  "responses_by_version": {
+   "error:500": 241,
+   "v1": 5740,
+   "v2": 3019
+  },
+  "rollout_timeline": [
+   {
+    "t": 4.0,
+    "phase": "Progressing 0"
+   },
+   {
+    "t": 6.1,
+    "phase": "Progressing 0"
+   },
+   {
+    "t": 8.1,
+    "phase": "Paused 1"
+   },
+   {
+    "t": 10.2,
+    "phase": "Paused 1"
+   },
+   {
+    "t": 12.2,
+    "phase": "Paused 1"
+   },
+   {
+    "t": 14.3,
+    "phase": "Paused 1"
+   },
+   {
+    "t": 16.3,
+    "phase": "Paused 1"
+   },
+   {
+    "t": 18.4,
+    "phase": "Paused 1"
+   },
+   {
+    "t": 20.4,
+    "phase": "Paused 1"
+   },
+   {
+    "t": 22.5,
+    "phase": "Paused 1"
+   },
+   {
+    "t": 24.5,
+    "phase": "Paused 1"
+   },
+   {
+    "t": 26.6,
+    "phase": "Paused 1"
+   },
+   {
+    "t": 28.7,
+    "phase": "Progressing 2"
+   },
+   {
+    "t": 30.7,
+    "phase": "Progressing 2"
+   },
+   {
+    "t": 32.8,
+    "phase": "Progressing 2"
+   },
+   {
+    "t": 34.9,
+    "phase": "Progressing 2"
+   },
+   {
+    "t": 36.9,
+    "phase": "Progressing 2"
+   },
+   {
+    "t": 39.0,
+    "phase": "Progressing 2"
+   },
+   {
+    "t": 41.1,
+    "phase": "Progressing 2"
+   },
+   {
+    "t": 43.1,
+    "phase": "Progressing 2"
+   },
+   {
+    "t": 45.2,
+    "phase": "Progressing 2"
+   },
+   {
+    "t": 47.2,
+    "phase": "Progressing 2"
+   },
+   {
+    "t": 49.3,
+    "phase": "Progressing 2"
+   },
+   {
+    "t": 51.3,
+    "phase": "Paused 3"
+   },
+   {
+    "t": 53.4,
+    "phase": "Paused 3"
+   },
+   {
+    "t": 55.4,
+    "phase": "Paused 3"
+   },
+   {
+    "t": 57.6,
+    "phase": "Paused 3"
+   },
+   {
+    "t": 59.6,
+    "phase": "Paused 3"
+   },
+   {
+    "t": 61.7,
+    "phase": "Paused 3"
+   },
+   {
+    "t": 63.7,
+    "phase": "Paused 3"
+   },
+   {
+    "t": 65.8,
+    "phase": "Paused 3"
+   },
+   {
+    "t": 67.8,
+    "phase": "Paused 3"
+   },
+   {
+    "t": 69.9,
+    "phase": "Progressing 4"
+   },
+   {
+    "t": 71.9,
+    "phase": "Progressing 4"
+   },
+   {
+    "t": 74.0,
+    "phase": "Progressing 4"
+   },
+   {
+    "t": 76.1,
+    "phase": "Progressing 4"
+   },
+   {
+    "t": 78.1,
+    "phase": "Progressing 4"
+   },
+   {
+    "t": 80.2,
+    "phase": "Progressing 4"
+   },
+   {
+    "t": 82.2,
+    "phase": "Progressing 4"
+   },
+   {
+    "t": 84.3,
+    "phase": "Progressing 4"
+   },
+   {
+    "t": 86.3,
+    "phase": "Progressing 4"
+   },
+   {
+    "t": 88.4,
+    "phase": "Progressing 4"
+   },
+   {
+    "t": 90.4,
+    "phase": "Progressing 4"
+   },
+   {
+    "t": 92.5,
+    "phase": "Progressing 4"
+   },
+   {
+    "t": 94.5,
+    "phase": "Healthy 4"
+   },
+   {
+    "t": 96.6,
+    "phase": "Healthy 4"
+   },
+   {
+    "t": 98.6,
+    "phase": "Healthy 4"
+   },
+   {
+    "t": 100.7,
+    "phase": "Healthy 4"
+   },
+   {
+    "t": 102.7,
+    "phase": "Healthy 4"
+   },
+   {
+    "t": 104.8,
+    "phase": "Healthy 4"
+   },
+   {
+    "t": 106.9,
+    "phase": "Healthy 4"
+   },
+   {
+    "t": 108.9,
+    "phase": "Healthy 4"
+   },
+   {
+    "t": 111.0,
+    "phase": "Healthy 4"
+   },
+   {
+    "t": 113.0,
+    "phase": "Healthy 4"
+   },
+   {
+    "t": 115.1,
+    "phase": "Healthy 4"
+   },
+   {
+    "t": 117.2,
+    "phase": "Healthy 4"
+   },
+   {
+    "t": 119.3,
+    "phase": "Healthy 4"
+   },
+   {
+    "t": 121.4,
+    "phase": "Healthy 4"
+   },
+   {
+    "t": 123.4,
+    "phase": "Healthy 4"
+   }
+  ]
+ },
+ "ablation_v2_to_v1_without_prestop": {
+  "to_version": "v1",
+  "prestop_seconds_on_old_pods": 0,
+  "requests": 9000,
+  "failed": 246,
+  "p99_ms": 220.0,
+  "responses_by_version": {
+   "error:500": 221,
+   "v2": 4661,
+   "error:502": 25,
+   "v1": 4093
+  },
+  "rollout_timeline": [
+   {
+    "t": 4.1,
+    "phase": "Progressing 0"
+   },
+   {
+    "t": 6.2,
+    "phase": "Progressing 0"
+   },
+   {
+    "t": 8.3,
+    "phase": "Paused 1"
+   },
+   {
+    "t": 10.3,
+    "phase": "Paused 1"
+   },
+   {
+    "t": 12.7,
+    "phase": "Paused 1"
+   },
+   {
+    "t": 14.8,
+    "phase": "Paused 1"
+   },
+   {
+    "t": 16.8,
+    "phase": "Paused 1"
+   },
+   {
+    "t": 18.9,
+    "phase": "Paused 1"
+   },
+   {
+    "t": 20.9,
+    "phase": "Paused 1"
+   },
+   {
+    "t": 23.0,
+    "phase": "Paused 1"
+   },
+   {
+    "t": 25.1,
+    "phase": "Paused 1"
+   },
+   {
+    "t": 27.1,
+    "phase": "Progressing 2"
+   },
+   {
+    "t": 29.2,
+    "phase": "Progressing 2"
+   },
+   {
+    "t": 31.3,
+    "phase": "Progressing 2"
+   },
+   {
+    "t": 33.3,
+    "phase": "Progressing 2"
+   },
+   {
+    "t": 35.4,
+    "phase": "Progressing 2"
+   },
+   {
+    "t": 37.5,
+    "phase": "Progressing 2"
+   },
+   {
+    "t": 39.6,
+    "phase": "Progressing 2"
+   },
+   {
+    "t": 41.6,
+    "phase": "Paused 3"
+   },
+   {
+    "t": 43.7,
+    "phase": "Paused 3"
+   },
+   {
+    "t": 45.7,
+    "phase": "Paused 3"
+   },
+   {
+    "t": 47.8,
+    "phase": "Paused 3"
+   },
+   {
+    "t": 50.0,
+    "phase": "Paused 3"
+   },
+   {
+    "t": 52.1,
+    "phase": "Paused 3"
+   },
+   {
+    "t": 54.2,
+    "phase": "Paused 3"
+   },
+   {
+    "t": 56.3,
+    "phase": "Paused 3"
+   },
+   {
+    "t": 58.4,
+    "phase": "Paused 3"
+   },
+   {
+    "t": 60.5,
+    "phase": "Progressing 4"
+   },
+   {
+    "t": 62.6,
+    "phase": "Progressing 4"
+   },
+   {
+    "t": 64.6,
+    "phase": "Progressing 4"
+   },
+   {
+    "t": 66.7,
+    "phase": "Progressing 4"
+   },
+   {
+    "t": 68.7,
+    "phase": "Progressing 4"
+   },
+   {
+    "t": 70.9,
+    "phase": "Progressing 4"
+   },
+   {
+    "t": 73.1,
+    "phase": "Progressing 4"
+   },
+   {
+    "t": 75.2,
+    "phase": "Healthy 4"
+   },
+   {
+    "t": 77.2,
+    "phase": "Healthy 4"
+   },
+   {
+    "t": 79.3,
+    "phase": "Healthy 4"
+   },
+   {
+    "t": 81.3,
+    "phase": "Healthy 4"
+   },
+   {
+    "t": 83.4,
+    "phase": "Healthy 4"
+   },
+   {
+    "t": 85.5,
+    "phase": "Healthy 4"
+   },
+   {
+    "t": 87.6,
+    "phase": "Healthy 4"
+   },
+   {
+    "t": 89.6,
+    "phase": "Healthy 4"
+   },
+   {
+    "t": 91.7,
+    "phase": "Healthy 4"
+   },
+   {
+    "t": 93.7,
+    "phase": "Healthy 4"
+   },
+   {
+    "t": 95.8,
+    "phase": "Healthy 4"
+   },
+   {
+    "t": 97.8,
+    "phase": "Healthy 4"
+   },
+   {
+    "t": 99.9,
+    "phase": "Healthy 4"
+   },
+   {
+    "t": 101.9,
+    "phase": "Healthy 4"
+   },
+   {
+    "t": 104.0,
+    "phase": "Healthy 4"
+   },
+   {
+    "t": 106.0,
+    "phase": "Healthy 4"
+   },
+   {
+    "t": 108.1,
+    "phase": "Healthy 4"
+   },
+   {
+    "t": 110.2,
+    "phase": "Healthy 4"
+   },
+   {
+    "t": 112.2,
+    "phase": "Healthy 4"
+   },
+   {
+    "t": 114.3,
+    "phase": "Healthy 4"
+   },
+   {
+    "t": 116.3,
+    "phase": "Healthy 4"
+   },
+   {
+    "t": 118.4,
+    "phase": "Healthy 4"
+   },
+   {
+    "t": 120.5,
+    "phase": "Healthy 4"
+   },
+   {
+    "t": 122.5,
+    "phase": "Healthy 4"
+   },
+   {
+    "t": 124.6,
+    "phase": "Healthy 4"
+   }
+  ]
+ },
+ "_seconds": 423.6
+}
