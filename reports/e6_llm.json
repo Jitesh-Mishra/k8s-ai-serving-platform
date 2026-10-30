@@ -1,0 +1,77 @@
+{
+ "model": "Qwen2.5-0.5B-Instruct Q4_K_M (GGUF), llama.cpp server, CPU",
+ "prompts": "synthetic",
+ "single_request": {
+  "decode_tokens_per_s_median": 50.6,
+  "latency_s_median_128_tokens": 2.69
+ },
+ "one_replica": {
+  "replicas": 1,
+  "requests": 24,
+  "concurrency": 4,
+  "failed": 0,
+  "tokens": 3072,
+  "wall_s": 61.0,
+  "throughput_tokens_per_s": 50.3,
+  "per_request_decode_tokens_per_s_median": 26.1,
+  "latency_p50_s": 10.17,
+  "llm_cpu_seconds": 143.8,
+  "cpu_seconds_per_1m_tokens": 46806.0
+ },
+ "two_replicas": {
+  "replicas": 2,
+  "requests": 24,
+  "concurrency": 4,
+  "failed": 0,
+  "tokens": 3072,
+  "wall_s": 51.0,
+  "throughput_tokens_per_s": 60.2,
+  "per_request_decode_tokens_per_s_median": 20.3,
+  "latency_p50_s": 7.46,
+  "llm_cpu_seconds": 198.0,
+  "cpu_seconds_per_1m_tokens": 64440.0
+ },
+ "scale_to_zero": {
+  "idle_seconds_setting": 45,
+  "cycles": [
+   {
+    "cold_start_s": 2.783,
+    "first_request_total_s": 3.73,
+    "warm_request_s_median": 0.82,
+    "seconds_idle_until_scaled_to_zero": null,
+    "status": [
+     200,
+     200,
+     200
+    ]
+   },
+   {
+    "cold_start_s": 3.027,
+    "first_request_total_s": 4.82,
+    "warm_request_s_median": 0.77,
+    "seconds_idle_until_scaled_to_zero": 45.4,
+    "status": [
+     200,
+     200,
+     200
+    ]
+   },
+   {
+    "cold_start_s": 3.03,
+    "first_request_total_s": 4.79,
+    "warm_request_s_median": 0.79,
+    "seconds_idle_until_scaled_to_zero": 47.5,
+    "status": [
+     200,
+     200,
+     200
+    ]
+   }
+  ],
+  "cold_start_s_median": 3.03,
+  "reserved_vcpu_per_replica": 1.0,
+  "idle_cost_avoided_usd_per_hour": 0.0446,
+  "idle_cost_avoided_usd_per_idle_day": 1.07
+ },
+ "_seconds": 295.8
+}

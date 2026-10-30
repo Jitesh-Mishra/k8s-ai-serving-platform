@@ -1,0 +1,10 @@
+{
+ "e1_autoscale": {
+  "status": "ok",
+  "seconds": 1011.2
+ },
+ "e2_noisy_neighbour": {
+  "status": "ok",
+  "seconds": 481.6
+ }
+}
