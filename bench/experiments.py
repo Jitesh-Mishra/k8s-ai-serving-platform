@@ -31,7 +31,8 @@ def stats(rs, t_from=None, t_to=None):
 
 def eta_values(**over):
     base = {"eta.rollout": False, "eta.version": "v1", "eta.preStopSeconds": 10, "eta.hpa.enabled": False,
-            "eta.replicas": 1, "gateway.quotasEnabled": True, "llm.enabled": False}
+            "eta.replicas": 1, "gateway.quotasEnabled": True, "llm.enabled": False,
+            "gateway.replicas": int(os.environ.get("GATEWAY_REPLICAS", "2"))}
     return {**base, **over}
 
 
@@ -59,9 +60,10 @@ def e1_autoscale():
     helm(eta_values(**{"eta.replicas": 1}))
     go(GW, [Stream("bench", "key-bench", 10, 15)])                       # warm-up
     single, _ = step_load("single_pod")
+    time.sleep(60)    # run 1 found the HPA starting at 2 pods: the adapter's 30 s rate still held the 300 req/s step
     helm(eta_values(**{"eta.hpa.enabled": True, "eta.replicas": 1}))
     k8s.wait_for(lambda: k8s.ready_replicas() == 1, 300, what="eta back to 1 replica")
-    time.sleep(20)                                                     # let the adapter see the new pod
+    time.sleep(30)
     go(GW, [Stream("bench", "key-bench", 10, 15)])
     poll = Poller("deployment", "eta").start()
     hpa, _ = step_load("hpa")
@@ -96,7 +98,7 @@ def noisy_phase(flood_rps):
     return res
 
 
-def e2_noisy_neighbour(flood_rps=300):
+def e2_noisy_neighbour(flood_rps=int(os.environ.get("FLOOD_RPS", "300"))):
     helm(eta_values(**{"eta.replicas": 1, "gateway.quotasEnabled": True}))
     out = {"setup": "eta fixed at 1 replica (no HPA); tenants B and C at 30 req/s each; tenant A floods at "
                     f"{flood_rps} req/s with a quota of 50 req/s; 60 s per phase, first 10 s skipped"}
@@ -319,7 +321,7 @@ def e6_llm(idle_s=45):
                        "warm_request_s_median": round(float(np.median([w["s"] for w in warm])), 2),
                        "seconds_idle_until_scaled_to_zero": round(scaled_down_after, 1) if scaled_down_after else None,
                        "status": [cold[0]["status"]] + [w["status"] for w in warm]})
-    req_cpu = 1.0
+    req_cpu = 0.5   # llm CPU request in values.yaml
     out["scale_to_zero"] = {"idle_seconds_setting": idle_s, "cycles": cycles,
                             "cold_start_s_median": round(float(np.median([c["cold_start_s"] for c in cycles])), 2),
                             "reserved_vcpu_per_replica": req_cpu,
