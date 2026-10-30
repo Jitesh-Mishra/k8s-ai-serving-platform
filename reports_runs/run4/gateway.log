@@ -1,0 +1,5 @@
+Found 3 pods, using pod/gateway-559448fc5d-xtcwx
+INFO:     Started server process [1]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)

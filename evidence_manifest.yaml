@@ -1,0 +1,43 @@
+project: k8s-ai-serving-platform
+state: PROOF RUN
+environment: GitHub Actions ubuntu runner, 4 vCPU, 16 GB, one kind node, CPU only (no GPU), load generator on the same host
+runs: see reports/PROVENANCE.md (Actions runs 41014776993, 41021647564, 41026519763)
+price_assumption: $0.0446 per vCPU-hour (AWS c7i.large on-demand us-east-1 $0.0892/h / 2 vCPU, https://calculator.holori.com/aws/ec2/c7i.large/us-east-1, checked 2026-10-30)
+claims:
+  - id: autoscale
+    text: single ETA pod meets p99 <= 100 ms up to 150 req/s and collapses at 200 (p99 109 s); HPA on req/s scales 1 to 6 pods and holds 200 req/s at 32.3 ms p99
+    source: reports/e1_autoscale.json (single_pod, hpa, max_rps_within_slo)
+  - id: scale_out_lag
+    text: 28 to 40 s from a load step to the first new ready pod, 5 scale-outs
+    source: reports/e1_autoscale.json (scale_out_reactions)
+  - id: noisy_neighbour
+    text: NEGATIVE RESULT. Quotas throttled tenant A (1,637 at a 120 req/s flood, 3,522 at 200) but B and C p99 rose from about 13 ms to 72-94 s with quotas on or off
+    source: reports/e2_noisy_neighbour_flood120.json, reports/e2_noisy_neighbour_flood200.json
+  - id: reconciliation
+    text: 0 of 6,300 requests mismatched between PostgreSQL usage_log and Prometheus counters
+    source: reports/e3_metering.json (reconciliation)
+  - id: crash_billing
+    text: 2,000/2,000 successful requests billed through a graceful gateway restart and through a SIGKILL
+    source: reports/e3_metering.json (graceful_restart, sigkill)
+  - id: batch
+    text: 3,000 batch jobs, 2 worker pods killed, 0 lost, 0 recorded twice, 12 reclaimed, 53.5 s
+    source: reports/e4_batch.json
+  - id: canary
+    text: Argo Rollouts canary under load, 1 failed of 9,000 with preStop vs 5 of 9,000 without (n=1 each)
+    source: reports/e5_canary.json
+  - id: llm_cost
+    text: Qwen2.5-0.5B Q4_K_M on llama.cpp CPU, 50.3 tok/s at 1 replica, 46,806 CPU-s per 1M tokens, about $0.58 per 1M tokens
+    source: reports/e6_llm.json (one_replica)
+  - id: cold_start
+    text: scale-to-zero after 45 s idle (measured 45.4 and 47.5 s), cold start median 3.03 s (2.78, 3.03, 3.03), warm about 0.8 s
+    source: reports/e6_llm.json (scale_to_zero)
+  - id: idle_cost
+    text: 0.5 vCPU reserved by the LLM pod, so $0.0223 per idle hour, $0.54 per idle day avoided (JSON says 1.0 vCPU / $1.07, computed before the request was lowered; see PROVENANCE)
+    source: charts/aiserve/values.yaml (llm.resources.requests.cpu), reports/e6_llm.json
+  - id: unit_cost_eta
+    text: 3.702 CPU-s per 1K predictions on the full path (gateway 2.29, ETA 1.107, Redis 0.17, PostgreSQL 0.135), $0.046 per 1M predictions
+    source: reports/e7_unit_costs.json
+not_claimed:
+  - GPU performance of any kind
+  - tenant isolation under a noisy neighbour
+  - multi-node scheduling
