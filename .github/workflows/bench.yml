@@ -7,6 +7,12 @@ on:
       only:
         description: "experiments to run (comma prefixes, empty = all): e1,e2,e3,e4,e5,e6,e7"
         default: ""
+      gateway_replicas:
+        description: "gateway replicas during the experiments"
+        default: "2"
+      flood_rps:
+        description: "noisy-neighbour flood rate (req/s)"
+        default: "300"
 permissions:
   contents: write
 jobs:
@@ -48,6 +54,7 @@ jobs:
           sleep 30
           kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1" | head -c 600 || true
       - name: Experiments
+        env: {GATEWAY_REPLICAS: "${{ inputs.gateway_replicas }}", FLOOD_RPS: "${{ inputs.flood_rps }}"}
         run: python -m bench.run_all --only "${{ inputs.only }}"
       - name: Grafana screenshot
         if: always()
