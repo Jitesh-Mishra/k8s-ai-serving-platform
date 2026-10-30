@@ -1,0 +1,24 @@
+# kube-prometheus-stack trimmed for a single-node kind cluster
+fullnameOverride: kps
+alertmanager: {enabled: false}
+kubeEtcd: {enabled: false}
+kubeScheduler: {enabled: false}
+kubeControllerManager: {enabled: false}
+kubeProxy: {enabled: false}
+defaultRules: {create: false}
+prometheus:
+  service: {type: NodePort, nodePort: 30090}
+  prometheusSpec:
+    scrapeInterval: 10s
+    evaluationInterval: 10s
+    retention: 6h
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelectorNilUsesHelmValues: false
+    resources: {requests: {cpu: 200m, memory: 512Mi}}
+grafana:
+  adminPassword: admin
+  service: {type: NodePort, nodePort: 30030}
+  sidecar:
+    dashboards: {enabled: true, label: grafana_dashboard, searchNamespace: ALL}
+  grafana.ini:
+    auth.anonymous: {enabled: true, org_role: Viewer}

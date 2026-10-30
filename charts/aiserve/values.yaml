@@ -1,0 +1,58 @@
+image:
+  repository: aiserve
+  tag: dev
+  pullPolicy: IfNotPresent
+
+tenants:            # API key -> tenant and quota (requests/s, burst). Stored in a Secret.
+  key-tenant-a: {tenant: tenant-a, rps: 50, burst: 100}
+  key-tenant-b: {tenant: tenant-b, rps: 200, burst: 400}
+  key-tenant-c: {tenant: tenant-c, rps: 200, burst: 400}
+
+gateway:
+  replicas: 2
+  quotasEnabled: true
+  nodePort: 30080
+  resources: {requests: {cpu: 500m, memory: 256Mi}, limits: {cpu: 1000m, memory: 512Mi}}
+
+eta:
+  version: v1
+  replicas: 1
+  rollout: false          # true: Argo Rollouts canary instead of a Deployment
+  preStopSeconds: 10
+  canarySteps:
+    - setWeight: 20
+    - pause: {duration: 20s}
+    - setWeight: 60
+    - pause: {duration: 20s}
+  resources: {requests: {cpu: 200m, memory: 256Mi}, limits: {cpu: 200m, memory: 512Mi}}
+  hpa:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 6
+    targetRpsPerPod: 40
+    targetCpuUtilization: 70
+
+worker:
+  replicas: 3
+  workMs: 50
+  claimIdleMs: 15000
+  resources: {requests: {cpu: 100m, memory: 256Mi}, limits: {cpu: 500m, memory: 512Mi}}
+
+llm:
+  enabled: true
+  image: ghcr.io/ggml-org/llama.cpp:server
+  modelFile: qwen2.5-0.5b-instruct-q4_k_m.gguf
+  replicas: 1
+  threads: 2
+  parallel: 2
+  scaleToZero: false
+  idleSeconds: 45
+  resources: {requests: {cpu: "1", memory: 1Gi}, limits: {cpu: "2", memory: 2Gi}}
+
+postgres:
+  nodePort: 30432
+  password: aiserve
+
+monitoring:
+  serviceMonitors: true
+  dashboard: true

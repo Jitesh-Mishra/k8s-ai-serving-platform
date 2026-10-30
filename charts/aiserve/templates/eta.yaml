@@ -1,0 +1,74 @@
+{{- define "aiserve.etaPod" -}}
+metadata:
+  labels: {app: eta}
+spec:
+  terminationGracePeriodSeconds: 30
+  containers:
+    - name: eta
+      image: {{ include "aiserve.image" . }}
+      imagePullPolicy: {{ .Values.image.pullPolicy }}
+      command: [uvicorn, aiserve.eta:app, --host, 0.0.0.0, --port, "8000", --no-access-log]
+      env:
+        - {name: MODEL_VERSION, value: {{ .Values.eta.version | quote }}}
+      ports: [{name: http, containerPort: 8000}]
+      readinessProbe: {httpGet: {path: /ready, port: 8000}, periodSeconds: 2, failureThreshold: 1}
+      {{- if gt (int .Values.eta.preStopSeconds) 0 }}
+      lifecycle: {preStop: {exec: {command: [sleep, {{ .Values.eta.preStopSeconds | quote }}]}}}
+      {{- end }}
+      resources: {{ toYaml .Values.eta.resources | nindent 8 }}
+{{- end }}
+{{- if .Values.eta.rollout }}
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata: {name: eta, labels: {app: eta}}
+spec:
+  replicas: {{ .Values.eta.replicas }}
+  selector: {matchLabels: {app: eta}}
+  template: {{- include "aiserve.etaPod" . | nindent 4 }}
+  strategy:
+    canary:
+      maxSurge: 1
+      maxUnavailable: 0
+      steps: {{- toYaml .Values.eta.canarySteps | nindent 8 }}
+{{- else }}
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: eta, labels: {app: eta}}
+spec:
+  replicas: {{ .Values.eta.replicas }}
+  selector: {matchLabels: {app: eta}}
+  strategy: {type: RollingUpdate, rollingUpdate: {maxSurge: 1, maxUnavailable: 0}}
+  template: {{- include "aiserve.etaPod" . | nindent 4 }}
+{{- end }}
+---
+apiVersion: v1
+kind: Service
+metadata: {name: eta, labels: {app: eta}}
+spec:
+  selector: {app: eta}
+  ports: [{name: http, port: 8000, targetPort: 8000}]
+{{- if .Values.eta.hpa.enabled }}
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata: {name: eta}
+spec:
+  scaleTargetRef:
+    {{- if .Values.eta.rollout }}
+    {apiVersion: argoproj.io/v1alpha1, kind: Rollout, name: eta}
+    {{- else }}
+    {apiVersion: apps/v1, kind: Deployment, name: eta}
+    {{- end }}
+  minReplicas: {{ .Values.eta.hpa.minReplicas }}
+  maxReplicas: {{ .Values.eta.hpa.maxReplicas }}
+  metrics:
+    - type: Pods
+      pods:
+        metric: {name: eta_requests_per_second}
+        target: {type: AverageValue, averageValue: {{ .Values.eta.hpa.targetRpsPerPod | quote }}}
+    - type: Resource
+      resource: {name: cpu, target: {type: Utilization, averageUtilization: {{ .Values.eta.hpa.targetCpuUtilization }}}}
+  behavior:
+    scaleUp: {stabilizationWindowSeconds: 0, policies: [{type: Percent, value: 100, periodSeconds: 15}, {type: Pods, value: 2, periodSeconds: 15}], selectPolicy: Max}
+    scaleDown: {stabilizationWindowSeconds: 60, policies: [{type: Percent, value: 50, periodSeconds: 30}]}
+{{- end }}
