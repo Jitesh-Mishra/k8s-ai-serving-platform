@@ -19,7 +19,8 @@ class ETAModel:
         self.n_iter = None if version == "v1" else 200
 
     def predict(self, rows) -> list[dict]:
-        x = np.asarray(rows, dtype=np.float32)
+        # JSON has no NaN; missing features arrive as null and LightGBM treats NaN as missing
+        x = np.array([[np.nan if v is None else v for v in r] for r in rows], dtype=np.float32)
         if x.ndim != 2 or x.shape[1] != N_FEATURES:
             raise ValueError(f"expected rows of {N_FEATURES} features")
         p50 = self.q50.predict(x, num_iteration=self.n_iter, num_threads=1)

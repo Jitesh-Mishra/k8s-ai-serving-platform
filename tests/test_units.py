@@ -20,6 +20,25 @@ def test_model_v1_v2_and_validation():
         v1.predict([[1.0, 2.0]])
 
 
+def test_token_bucket_holds_rate_with_fractional_clock(redis_url):
+    """400 calls/s against a 50/s quota admits 50/s plus the burst, with a sub-second clock."""
+    async def go():
+        r = aioredis.from_url(redis_url, decode_responses=True)
+        await r.delete("rl:t2")
+        tb = TokenBucket(r)
+        t, allowed = 5000.3, 0
+        for i in range(2000):                  # 400 calls/s for 5 s against a 50/s quota with burst 10
+            allowed += await tb.allow("t2", rate=50, burst=10, now=t + i / 400)
+        assert 250 <= allowed <= 262           # 50/s x 5 s + burst 10
+        await r.aclose()
+    asyncio.run(go())
+
+
+def test_model_accepts_missing_values():
+    p = ETAModel("v1").predict([[None] * 19])
+    assert p[0]["p50_min"] >= 0
+
+
 def test_token_bucket_limits_rate(redis_url):
     async def go():
         r = aioredis.from_url(redis_url, decode_responses=True)

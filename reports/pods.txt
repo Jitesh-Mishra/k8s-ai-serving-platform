@@ -1,0 +1,29 @@
+NAMESPACE            NAME                                       READY   STATUS    RESTARTS      AGE   IP            NODE               NOMINATED NODE   READINESS GATES
+ai                   eta-95b5dfddc-7bvtz                        1/1     Running   0             10m   10.244.0.58   ai-control-plane   <none>           <none>
+ai                   eta-95b5dfddc-v7wnt                        1/1     Running   0             10m   10.244.0.59   ai-control-plane   <none>           <none>
+ai                   gateway-9c9cd67cd-wtn7t                    1/1     Running   0             18m   10.244.0.35   ai-control-plane   <none>           <none>
+ai                   gateway-9c9cd67cd-xhvx9                    1/1     Running   0             19m   10.244.0.33   ai-control-plane   <none>           <none>
+ai                   llm-857cd67b4-qwqs6                        0/1     Pending   0             10m   <none>        <none>             <none>           <none>
+ai                   postgres-65bd685878-v8n5p                  1/1     Running   0             43m   10.244.0.22   ai-control-plane   <none>           <none>
+ai                   redis-75fb586b75-swbkf                     1/1     Running   0             43m   10.244.0.18   ai-control-plane   <none>           <none>
+ai                   worker-f4848486c-9b9xn                     1/1     Running   0             18m   10.244.0.36   ai-control-plane   <none>           <none>
+ai                   worker-f4848486c-jhq4d                     1/1     Running   1 (43m ago)   43m   10.244.0.21   ai-control-plane   <none>           <none>
+ai                   worker-f4848486c-z69sd                     1/1     Running   0             17m   10.244.0.37   ai-control-plane   <none>           <none>
+argo-rollouts        argo-rollouts-b69548697-4j4ff              1/1     Running   0             43m   10.244.0.13   ai-control-plane   <none>           <none>
+argo-rollouts        argo-rollouts-b69548697-4nz6s              1/1     Running   0             43m   10.244.0.14   ai-control-plane   <none>           <none>
+kube-system          coredns-7d764666f9-tt9lv                   1/1     Running   0             46m   10.244.0.4    ai-control-plane   <none>           <none>
+kube-system          coredns-7d764666f9-wbbcq                   1/1     Running   0             46m   10.244.0.3    ai-control-plane   <none>           <none>
+kube-system          etcd-ai-control-plane                      1/1     Running   0             46m   172.18.0.2    ai-control-plane   <none>           <none>
+kube-system          kindnet-7jfrn                              1/1     Running   0             46m   172.18.0.2    ai-control-plane   <none>           <none>
+kube-system          kube-apiserver-ai-control-plane            1/1     Running   0             46m   172.18.0.2    ai-control-plane   <none>           <none>
+kube-system          kube-controller-manager-ai-control-plane   1/1     Running   0             46m   172.18.0.2    ai-control-plane   <none>           <none>
+kube-system          kube-proxy-ftv2v                           1/1     Running   0             46m   172.18.0.2    ai-control-plane   <none>           <none>
+kube-system          kube-scheduler-ai-control-plane            1/1     Running   0             46m   172.18.0.2    ai-control-plane   <none>           <none>
+kube-system          metrics-server-76bff4d78b-cctc2            1/1     Running   0             44m   10.244.0.11   ai-control-plane   <none>           <none>
+local-path-storage   local-path-provisioner-67b8995b4b-qh66p    1/1     Running   0             46m   10.244.0.2    ai-control-plane   <none>           <none>
+monitoring           kps-grafana-575cd67c5b-5b6k5               3/3     Running   0             45m   10.244.0.8    ai-control-plane   <none>           <none>
+monitoring           kps-kube-state-metrics-97dbbcbb9-stzcl     1/1     Running   0             45m   10.244.0.7    ai-control-plane   <none>           <none>
+monitoring           kps-operator-5dddc9fbcc-582xv              1/1     Running   0             45m   10.244.0.6    ai-control-plane   <none>           <none>
+monitoring           kps-prometheus-node-exporter-js944         1/1     Running   0             45m   172.18.0.2    ai-control-plane   <none>           <none>
+monitoring           prometheus-adapter-5f598df4dd-mtqzg        1/1     Running   0             43m   10.244.0.12   ai-control-plane   <none>           <none>
+monitoring           prometheus-kps-prometheus-0                2/2     Running   0             45m   10.244.0.9    ai-control-plane   <none>           <none>

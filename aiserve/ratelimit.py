@@ -12,7 +12,8 @@ if tokens == nil then tokens = burst; ts = now end
 tokens = math.min(burst, tokens + (now - ts) * rate)
 local ok = 0
 if tokens >= 1 then tokens = tokens - 1; ok = 1 end
-redis.call('HSET', key, 'tokens', tokens, 'ts', now)
+-- store as strings so the fractional clock survives exactly
+redis.call('HSET', key, 'tokens', tostring(tokens), 'ts', tostring(now))
 redis.call('EXPIRE', key, 60)
 return ok
 """

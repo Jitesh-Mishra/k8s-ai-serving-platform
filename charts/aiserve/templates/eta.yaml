@@ -66,8 +66,10 @@ spec:
       pods:
         metric: {name: eta_requests_per_second}
         target: {type: AverageValue, averageValue: {{ .Values.eta.hpa.targetRpsPerPod | quote }}}
+    {{- if gt (int .Values.eta.hpa.targetCpuUtilization) 0 }}
     - type: Resource
       resource: {name: cpu, target: {type: Utilization, averageUtilization: {{ .Values.eta.hpa.targetCpuUtilization }}}}
+    {{- end }}
   behavior:
     scaleUp: {stabilizationWindowSeconds: 0, policies: [{type: Percent, value: 100, periodSeconds: 15}, {type: Pods, value: 2, periodSeconds: 15}], selectPolicy: Max}
     scaleDown: {stabilizationWindowSeconds: 60, policies: [{type: Percent, value: 50, periodSeconds: 30}]}

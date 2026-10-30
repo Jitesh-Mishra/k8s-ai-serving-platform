@@ -1,0 +1,81 @@
+{
+ "reconciliation": {
+  "gateway_pods": [
+   "gateway-77fccbd8c8-kw2n4",
+   "gateway-77fccbd8c8-vdbrc"
+  ],
+  "prometheus_requests": 6089,
+  "logged_requests": 6089,
+  "mismatched_requests": 0,
+  "mismatches": {}
+ },
+ "graceful_restart": {
+  "kind": "graceful",
+  "client_sent": 2000,
+  "client_succeeded": 1955,
+  "client_failed": 45,
+  "billed_rows": 1955,
+  "unbilled_successful_requests": 0
+ },
+ "sigkill": {
+  "kind": "sigkill",
+  "client_sent": 2000,
+  "client_succeeded": 1957,
+  "client_failed": 43,
+  "billed_rows": 1957,
+  "unbilled_successful_requests": 0
+ },
+ "invoice": [
+  {
+   "day": "2026-10-30",
+   "tenant": "bench",
+   "model": "eta",
+   "billable_requests": 90050,
+   "throttled_requests": 0,
+   "units": "90050",
+   "amount_usd": 9.005
+  },
+  {
+   "day": "2026-10-30",
+   "tenant": "tenant-a",
+   "model": "eta",
+   "billable_requests": 35081,
+   "throttled_requests": 15133,
+   "units": "35081",
+   "amount_usd": 3.5081
+  },
+  {
+   "day": "2026-10-30",
+   "tenant": "tenant-b",
+   "model": "eta",
+   "billable_requests": 7455,
+   "throttled_requests": 0,
+   "units": "7455",
+   "amount_usd": 0.7455
+  },
+  {
+   "day": "2026-10-30",
+   "tenant": "tenant-c",
+   "model": "batch",
+   "billable_requests": 395,
+   "throttled_requests": 0,
+   "units": "1975",
+   "amount_usd": 0.09875
+  },
+  {
+   "day": "2026-10-30",
+   "tenant": "tenant-c",
+   "model": "eta",
+   "billable_requests": 3912,
+   "throttled_requests": 0,
+   "units": "3912",
+   "amount_usd": 0.3912
+  }
+ ],
+ "example_prices": {
+  "eta": "$0.00010000 per row",
+  "batch": "$0.00005000 per row",
+  "llm": "$0.00000050 per token"
+ },
+ "_seconds": 155.5
+}
