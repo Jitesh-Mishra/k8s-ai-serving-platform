@@ -1,0 +1,13 @@
+{
+ "jobs_sent": 3000,
+ "jobs_accepted": 3000,
+ "jobs_completed": 3000,
+ "jobs_lost": 0,
+ "jobs_processed_more_than_once": 0,
+ "worker_pods_killed": 2,
+ "reclaimed_from_dead_workers": 12,
+ "seconds_from_first_enqueue_to_all_done": 53.5,
+ "workers": 3,
+ "work_ms_per_job": 50,
+ "_seconds": 53.5
+}

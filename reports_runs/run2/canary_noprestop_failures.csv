@@ -1,0 +1,2 @@
+Method,Name,Error,Occurrences,First Seen,Last Seen
+POST,eta,CatchResponseError('status 502'),5,2026-10-30T07:15:33Z,2026-10-30T07:15:39Z

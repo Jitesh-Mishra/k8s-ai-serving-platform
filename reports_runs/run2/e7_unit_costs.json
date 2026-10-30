@@ -1,0 +1,16 @@
+{
+ "rps": 100,
+ "seconds": 60,
+ "successful_requests": 6000,
+ "eta_predictions_counted": 6166.5230769230775,
+ "cpu_seconds_per_1k_predictions": {
+  "eta": 1.107,
+  "gateway": 2.29,
+  "redis": 0.17,
+  "postgres": 0.135
+ },
+ "cpu_seconds_per_1k_predictions_full_path": 3.702,
+ "usd_per_1m_predictions_full_path": 0.0459,
+ "price_assumption": "$0.0446 per vCPU-hour (AWS c7i.large on-demand us-east-1 / 2 vCPU)",
+ "_seconds": 106.2
+}
