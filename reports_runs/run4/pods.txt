@@ -1,0 +1,29 @@
+NAMESPACE            NAME                                       READY   STATUS    RESTARTS        AGE     IP            NODE               NOMINATED NODE   READINESS GATES
+ai                   eta-55bf45845c-kz69b                       1/1     Running   0               74s     10.244.0.27   ai-control-plane   <none>           <none>
+ai                   eta-55bf45845c-mtln9                       1/1     Running   0               7m58s   10.244.0.17   ai-control-plane   <none>           <none>
+ai                   gateway-559448fc5d-scddv                   1/1     Running   0               72s     10.244.0.29   ai-control-plane   <none>           <none>
+ai                   gateway-559448fc5d-w4v4n                   1/1     Running   0               69s     10.244.0.30   ai-control-plane   <none>           <none>
+ai                   gateway-559448fc5d-xtcwx                   1/1     Running   0               74s     10.244.0.28   ai-control-plane   <none>           <none>
+ai                   postgres-65bd685878-9wv8g                  1/1     Running   0               7m58s   10.244.0.15   ai-control-plane   <none>           <none>
+ai                   redis-75fb586b75-6xlz5                     1/1     Running   0               7m58s   10.244.0.16   ai-control-plane   <none>           <none>
+ai                   worker-f4848486c-blsgt                     1/1     Running   1 (7m54s ago)   7m58s   10.244.0.22   ai-control-plane   <none>           <none>
+ai                   worker-f4848486c-kb9dl                     1/1     Running   1 (7m54s ago)   7m58s   10.244.0.18   ai-control-plane   <none>           <none>
+ai                   worker-f4848486c-wfb94                     1/1     Running   1 (7m54s ago)   7m58s   10.244.0.20   ai-control-plane   <none>           <none>
+argo-rollouts        argo-rollouts-b69548697-c794t              1/1     Running   0               8m3s    10.244.0.13   ai-control-plane   <none>           <none>
+argo-rollouts        argo-rollouts-b69548697-k9w96              1/1     Running   0               8m3s    10.244.0.14   ai-control-plane   <none>           <none>
+kube-system          coredns-7d764666f9-82gz2                   1/1     Running   0               10m     10.244.0.4    ai-control-plane   <none>           <none>
+kube-system          coredns-7d764666f9-kp46c                   1/1     Running   0               10m     10.244.0.2    ai-control-plane   <none>           <none>
+kube-system          etcd-ai-control-plane                      1/1     Running   0               10m     172.18.0.2    ai-control-plane   <none>           <none>
+kube-system          kindnet-clcc9                              1/1     Running   0               10m     172.18.0.2    ai-control-plane   <none>           <none>
+kube-system          kube-apiserver-ai-control-plane            1/1     Running   0               10m     172.18.0.2    ai-control-plane   <none>           <none>
+kube-system          kube-controller-manager-ai-control-plane   1/1     Running   0               10m     172.18.0.2    ai-control-plane   <none>           <none>
+kube-system          kube-proxy-rklz5                           1/1     Running   0               10m     172.18.0.2    ai-control-plane   <none>           <none>
+kube-system          kube-scheduler-ai-control-plane            1/1     Running   0               10m     172.18.0.2    ai-control-plane   <none>           <none>
+kube-system          metrics-server-76bff4d78b-q7m2s            1/1     Running   0               9m3s    10.244.0.11   ai-control-plane   <none>           <none>
+local-path-storage   local-path-provisioner-67b8995b4b-mtxvl    1/1     Running   0               10m     10.244.0.3    ai-control-plane   <none>           <none>
+monitoring           kps-grafana-575cd67c5b-6jr8v               3/3     Running   0               9m39s   10.244.0.8    ai-control-plane   <none>           <none>
+monitoring           kps-kube-state-metrics-97dbbcbb9-nw5h9     1/1     Running   0               9m39s   10.244.0.7    ai-control-plane   <none>           <none>
+monitoring           kps-operator-5dddc9fbcc-xvw6g              1/1     Running   0               9m39s   10.244.0.6    ai-control-plane   <none>           <none>
+monitoring           kps-prometheus-node-exporter-wwznv         1/1     Running   0               9m39s   172.18.0.2    ai-control-plane   <none>           <none>
+monitoring           prometheus-adapter-5f598df4dd-w92xb        1/1     Running   0               8m38s   10.244.0.12   ai-control-plane   <none>           <none>
+monitoring           prometheus-kps-prometheus-0                2/2     Running   0               9m36s   10.244.0.9    ai-control-plane   <none>           <none>

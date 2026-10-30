@@ -51,3 +51,9 @@
 **D10 Prices**
 - Unit costs convert measured CPU-seconds at $0.0892/h for a 2-vCPU AWS c7i.large (on-demand, us-east-1, Linux, third-party calculator, checked 2026-10-30). That is $0.0446 per vCPU-hour.
 - This is an assumption for scale, not a quote. Invoice prices ($0.10 per 1K ETA rows, and so on) are made-up examples.
+
+**D11 Runs 2 to 4**
+- Run 2's HPA test still started at 2 pods after CPU was dropped as a signal: the adapter's 30 s rate window still held the previous 300 req/s step from the single-pod test. Run 3 adds a 60 s idle gap and starts at 1 pod.
+- The token-bucket "overshoot" in the local test was not float truncation (Redis 7 keeps the fraction). Queued requests were admitted over a longer wall time than the test assumed. The test was loosened, the code kept.
+- Noisy neighbour at 200 req/s (run 3) and 120 req/s (run 4): quotas throttled tenant A but B and C still went to 70-90 s p99, quotas on or off. Not isolated yet. Candidate causes: the load generator sharing the node, the 3 gateway replicas, CFS throttling of the 200m ETA limit under bursts.
+- Grafana screenshots from the headless runner render panels without lines, even after a 25 s wait. The dashboard ships; screenshots are not used.
