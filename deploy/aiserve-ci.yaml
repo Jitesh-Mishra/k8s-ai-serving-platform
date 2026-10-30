@@ -1,0 +1,7 @@
+# values used by the benchmark (kind, single node, CPU only)
+image: {repository: aiserve, tag: dev, pullPolicy: Never}
+tenants:
+  key-tenant-a: {tenant: tenant-a, rps: 50, burst: 100}     # the noisy neighbour
+  key-tenant-b: {tenant: tenant-b, rps: 200, burst: 400}
+  key-tenant-c: {tenant: tenant-c, rps: 200, burst: 400}
+  key-bench: {tenant: bench, rps: 100000, burst: 100000}     # load tests that are not about quotas

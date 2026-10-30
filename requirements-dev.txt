@@ -1,0 +1,6 @@
+-r requirements.txt
+pytest>=8
+locust>=2.31
+pandas>=2.2
+matplotlib>=3.8
+playwright>=1.47

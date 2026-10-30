@@ -1,0 +1,75 @@
+name: Bench (kind cluster)
+# Full platform on a kind cluster: kube-prometheus-stack, metrics-server, prometheus-adapter, Argo Rollouts,
+# the aiserve chart and a llama.cpp LLM. Runs the experiments and commits results to the bench-results branch.
+on:
+  workflow_dispatch:
+    inputs:
+      only:
+        description: "experiments to run (comma prefixes, empty = all): e1,e2,e3,e4,e5,e6,e7"
+        default: ""
+permissions:
+  contents: write
+jobs:
+  bench:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12", cache: pip}
+      - run: pip install -r requirements-dev.txt huggingface_hub && python -m playwright install --with-deps chromium
+      - name: Runner
+        run: nproc; free -g; df -h / | tail -1
+      - name: Model weights (official Qwen GGUF from Hugging Face)
+        run: python -c "from huggingface_hub import hf_hub_download as d; d('Qwen/Qwen2.5-0.5B-Instruct-GGUF','qwen2.5-0.5b-instruct-q4_k_m.gguf',local_dir='/tmp/models')" && ls -la /tmp/models
+      - name: Images
+        run: |
+          docker build -t aiserve:dev .
+          docker pull ghcr.io/ggml-org/llama.cpp:server
+          docker pull redis:7-alpine
+          docker pull postgres:16-alpine
+      - uses: helm/kind-action@v1
+        with: {config: deploy/kind.yaml, cluster_name: ai}
+      - run: for i in aiserve:dev ghcr.io/ggml-org/llama.cpp:server redis:7-alpine postgres:16-alpine; do kind load docker-image $i --name ai; done
+      - name: Platform add-ons
+        run: |
+          helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+          helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
+          helm repo add argo https://argoproj.github.io/argo-helm
+          helm repo update
+          helm install kps prometheus-community/kube-prometheus-stack -n monitoring --create-namespace -f deploy/kps-values.yaml --wait --timeout 10m
+          helm install metrics-server metrics-server/metrics-server -n kube-system --set args={--kubelet-insecure-tls} --wait
+          helm install prometheus-adapter prometheus-community/prometheus-adapter -n monitoring -f deploy/adapter-values.yaml --wait
+          helm install argo-rollouts argo/argo-rollouts -n argo-rollouts --create-namespace --wait
+      - name: Install aiserve
+        run: |
+          helm upgrade --install aiserve charts/aiserve -n ai --create-namespace -f deploy/aiserve-ci.yaml --set llm.enabled=false --wait --timeout 10m
+          kubectl -n ai get pods -o wide
+          sleep 30
+          kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1" | head -c 600 || true
+      - name: Experiments
+        run: python -m bench.run_all --only "${{ inputs.only }}"
+      - name: Grafana screenshot
+        if: always()
+        run: python bench/screenshot.py || true
+      - name: Cluster state (debug)
+        if: always()
+        run: |
+          kubectl get pods -A -o wide > results/pods.txt 2>&1 || true
+          kubectl -n ai get events --sort-by=.lastTimestamp > results/events.txt 2>&1 || true
+          kubectl -n ai logs deploy/gateway --tail=200 > results/gateway.log 2>&1 || true
+          nproc > results/runner.txt; free -g >> results/runner.txt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: bench-results, path: results/}
+      - name: Commit results to bench-results
+        if: always()
+        run: |
+          SHA=$(git rev-parse --short HEAD); DEST=runs/$SHA-${{ github.run_id }}
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          URL=https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}
+          git clone -q --depth 1 -b bench-results $URL /tmp/br || { mkdir /tmp/br && cd /tmp/br && git init -q -b bench-results && git remote add origin $URL && cd -; }
+          mkdir -p /tmp/br/$DEST && cp -r results/. /tmp/br/$DEST/
+          cd /tmp/br && git add runs && git commit -qm "bench ${{ inputs.only || 'all' }} at $SHA (run ${{ github.run_id }})"
+          for i in 1 2 3; do git push -q origin bench-results && break; git pull -q --rebase origin bench-results; done

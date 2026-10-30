@@ -1,0 +1,10 @@
+fastapi>=0.115
+uvicorn[standard]>=0.30
+pydantic>=2.7
+lightgbm>=4.3
+numpy>=1.26
+httpx>=0.27
+redis>=5.0
+psycopg[binary]>=3.2
+prometheus_client>=0.20
+kubernetes>=30.1

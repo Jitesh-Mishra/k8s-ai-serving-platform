@@ -1,0 +1,17 @@
+# prometheus-adapter: exposes eta_requests_per_second (per pod) to the HPA via custom.metrics.k8s.io
+prometheus:
+  url: http://kps-prometheus.monitoring.svc
+  port: 9090
+metricsRelistInterval: 15s
+rules:
+  default: false
+  custom:
+    - seriesQuery: 'eta_requests_total{namespace!="",pod!=""}'
+      resources:
+        overrides:
+          namespace: {resource: namespace}
+          pod: {resource: pod}
+      name:
+        matches: "^eta_requests_total$"
+        as: "eta_requests_per_second"
+      metricsQuery: 'sum(rate(<<.Series>>{<<.LabelMatchers>>}[30s])) by (<<.GroupBy>>)'

@@ -1,0 +1,33 @@
+{{- if .Values.llm.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: llm, labels: {app: llm}}
+spec:
+  {{- if not .Values.llm.scaleToZero }}
+  replicas: {{ .Values.llm.replicas }}
+  {{- else }}
+  replicas: 0             # the gateway's activator scales 0 -> 1 on demand and back after idleSeconds
+  {{- end }}
+  selector: {matchLabels: {app: llm}}
+  template:
+    metadata: {labels: {app: llm}}
+    spec:
+      containers:
+        - name: llm
+          image: {{ .Values.llm.image }}
+          imagePullPolicy: IfNotPresent
+          args: [-m, /models/{{ .Values.llm.modelFile }}, --host, 0.0.0.0, --port, "8080", -c, "4096",
+                 -t, {{ .Values.llm.threads | quote }}, -np, {{ .Values.llm.parallel | quote }}, --metrics]
+          ports: [{name: http, containerPort: 8080}]
+          readinessProbe: {httpGet: {path: /health, port: 8080}, periodSeconds: 1, failureThreshold: 1}
+          volumeMounts: [{name: models, mountPath: /models, readOnly: true}]
+          resources: {{ toYaml .Values.llm.resources | nindent 12 }}
+      volumes: [{name: models, hostPath: {path: /models, type: Directory}}]
+---
+apiVersion: v1
+kind: Service
+metadata: {name: llm, labels: {app: llm}}
+spec:
+  selector: {app: llm}
+  ports: [{name: http, port: 8080, targetPort: 8080}]
+{{- end }}

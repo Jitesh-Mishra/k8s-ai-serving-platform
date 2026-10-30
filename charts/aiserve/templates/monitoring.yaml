@@ -1,0 +1,24 @@
+{{- if .Values.monitoring.serviceMonitors }}
+{{- range $app := list "gateway" "eta" "worker" "llm" }}
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata: {name: {{ $app }}, labels: {app: {{ $app }}}}
+spec:
+  selector: {matchLabels: {app: {{ $app }}}}
+  endpoints:
+    - port: {{ if eq $app "worker" }}metrics{{ else }}http{{ end }}
+      path: /metrics
+      interval: 5s
+{{- end }}
+{{- end }}
+{{- if .Values.monitoring.dashboard }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aiserve-dashboard
+  labels: {grafana_dashboard: "1"}
+data:
+  aiserve.json: {{ .Files.Get "dashboards/aiserve.json" | quote }}
+{{- end }}

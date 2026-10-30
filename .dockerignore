@@ -1,0 +1,10 @@
+.git
+__pycache__
+.pytest_cache
+results
+reports
+charts
+bench
+tests
+docs
+data

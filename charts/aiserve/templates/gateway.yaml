@@ -1,0 +1,61 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata: {name: gateway}
+---
+# the gateway may only read and change the scale of the LLM Deployment (scale-to-zero activator)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata: {name: llm-scaler}
+rules:
+  - apiGroups: [apps]
+    resources: [deployments, deployments/scale]
+    resourceNames: [llm]
+    verbs: [get, patch, update]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata: {name: gateway-llm-scaler}
+subjects: [{kind: ServiceAccount, name: gateway}]
+roleRef: {kind: Role, name: llm-scaler, apiGroup: rbac.authorization.k8s.io}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: gateway, labels: {app: gateway}}
+spec:
+  replicas: {{ .Values.gateway.replicas }}
+  selector: {matchLabels: {app: gateway}}
+  template:
+    metadata:
+      labels: {app: gateway}
+      annotations: {checksum/tenants: {{ .Values.tenants | toJson | sha256sum | trunc 12 }}, quotas: {{ .Values.gateway.quotasEnabled | quote }}}
+    spec:
+      serviceAccountName: gateway
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: gateway
+          image: {{ include "aiserve.image" . }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: [uvicorn, aiserve.gateway:app, --host, 0.0.0.0, --port, "8000", --no-access-log]
+          env:
+            {{- include "aiserve.podEnv" . | nindent 12 }}
+            - {name: ETA_URL, value: "http://eta:8000"}
+            - {name: LLM_URL, value: "http://llm:8080"}
+            - {name: QUOTAS_ENABLED, value: {{ .Values.gateway.quotasEnabled | quote }}}
+            - {name: SCALE_TO_ZERO, value: {{ .Values.llm.scaleToZero | quote }}}
+            - {name: LLM_IDLE_SECONDS, value: {{ .Values.llm.idleSeconds | quote }}}
+            - {name: LLM_DEPLOYMENT, value: llm}
+            - {name: TENANTS_FILE, value: /etc/aiserve/tenants.json}
+          volumeMounts: [{name: tenants, mountPath: /etc/aiserve, readOnly: true}]
+          ports: [{name: http, containerPort: 8000}]
+          readinessProbe: {httpGet: {path: /healthz, port: 8000}, periodSeconds: 2}
+          lifecycle: {preStop: {exec: {command: [sleep, "5"]}}}
+          resources: {{ toYaml .Values.gateway.resources | nindent 12 }}
+      volumes: [{name: tenants, secret: {secretName: tenants}}]
+---
+apiVersion: v1
+kind: Service
+metadata: {name: gateway, labels: {app: gateway}}
+spec:
+  type: NodePort
+  selector: {app: gateway}
+  ports: [{name: http, port: 8000, targetPort: 8000, nodePort: {{ .Values.gateway.nodePort }}}]
