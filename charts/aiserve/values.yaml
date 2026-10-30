@@ -12,7 +12,7 @@ gateway:
   replicas: 2
   quotasEnabled: true
   nodePort: 30080
-  resources: {requests: {cpu: 500m, memory: 256Mi}, limits: {cpu: 1000m, memory: 512Mi}}
+  resources: {requests: {cpu: 250m, memory: 256Mi}, limits: {cpu: 1000m, memory: 512Mi}}
 
 eta:
   version: v1
@@ -24,13 +24,13 @@ eta:
     - pause: {duration: 20s}
     - setWeight: 60
     - pause: {duration: 20s}
-  resources: {requests: {cpu: 200m, memory: 256Mi}, limits: {cpu: 200m, memory: 512Mi}}
+  resources: {requests: {cpu: 100m, memory: 256Mi}, limits: {cpu: 200m, memory: 512Mi}}
   hpa:
     enabled: false
     minReplicas: 1
     maxReplicas: 6
     targetRpsPerPod: 40
-    targetCpuUtilization: 70
+    targetCpuUtilization: 0     # 0 = scale on requests/s only (CPU requests are kept small so the 4-vCPU node fits 6 pods)
 
 worker:
   replicas: 3
@@ -47,7 +47,7 @@ llm:
   parallel: 2
   scaleToZero: false
   idleSeconds: 45
-  resources: {requests: {cpu: "1", memory: 1Gi}, limits: {cpu: "2", memory: 2Gi}}
+  resources: {requests: {cpu: 500m, memory: 1Gi}, limits: {cpu: "2", memory: 2Gi}}
 
 postgres:
   nodePort: 30432

@@ -20,7 +20,7 @@ state = {"model": None, "draining": False}
 
 
 class PredictIn(BaseModel):
-    rows: list[list[float]]
+    rows: list[list[float | None]]
 
 
 @app.on_event("startup")

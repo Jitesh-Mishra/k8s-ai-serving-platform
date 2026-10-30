@@ -45,7 +45,7 @@ S: dict = {}
 
 
 class EtaIn(BaseModel):
-    rows: list[list[float]]
+    rows: list[list[float | None]]
 
 
 class GenIn(BaseModel):

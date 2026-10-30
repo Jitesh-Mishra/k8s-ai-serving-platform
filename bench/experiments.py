@@ -86,8 +86,9 @@ def noisy_phase(flood_rps):
     streams = [Stream("tenant-b", "key-tenant-b", 30, 60), Stream("tenant-c", "key-tenant-c", 30, 60)]
     if flood_rps:
         streams.append(Stream("tenant-a", "key-tenant-a", flood_rps, 60))
+    t = time.time()
     rs = go(GW, streams)
-    res = {}
+    res = {"phase_wall_seconds": round(time.time() - t, 1)}
     for t in ("tenant-a", "tenant-b", "tenant-c"):
         sel = [r for r in rs if r.tenant == t and r.t >= 10]
         if sel:
@@ -95,14 +96,15 @@ def noisy_phase(flood_rps):
     return res
 
 
-def e2_noisy_neighbour(flood_rps=400):
-    helm(eta_values(**{"eta.replicas": 2, "gateway.quotasEnabled": True}))
-    out = {"setup": "eta fixed at 2 replicas (no HPA); tenants B and C at 30 req/s each; tenant A floods at "
+def e2_noisy_neighbour(flood_rps=300):
+    helm(eta_values(**{"eta.replicas": 1, "gateway.quotasEnabled": True}))
+    out = {"setup": "eta fixed at 1 replica (no HPA); tenants B and C at 30 req/s each; tenant A floods at "
                     f"{flood_rps} req/s with a quota of 50 req/s; 60 s per phase, first 10 s skipped"}
     out["baseline_no_flood"] = noisy_phase(0)
     out["flood_quotas_on"] = noisy_phase(flood_rps)
-    helm(eta_values(**{"eta.replicas": 2, "gateway.quotasEnabled": False}))
+    helm(eta_values(**{"eta.replicas": 1, "gateway.quotasEnabled": False}))
     time.sleep(10)
+    out["baseline_no_flood_after_restart"] = noisy_phase(0)
     out["flood_quotas_off"] = noisy_phase(flood_rps)
     helm(eta_values(**{"eta.replicas": 2, "gateway.quotasEnabled": True}))
     time.sleep(10)

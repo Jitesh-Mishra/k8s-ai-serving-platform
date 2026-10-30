@@ -53,7 +53,7 @@ def test_unknown_key_rejected(stack):
 def test_quota_isolates_tenants(stack):
     codes = [httpx.post(f"{stack}/v1/eta", json={"rows": ROWS[:1]}, headers={"X-API-Key": "key-a"}).status_code
              for _ in range(12)]
-    assert codes.count(200) <= 7 and codes.count(429) >= 5
+    assert codes.count(200) <= 9 and codes.count(429) >= 3      # burst 5 + refill at 5/s during the calls
     assert httpx.post(f"{stack}/v1/eta", json={"rows": ROWS[:1]}, headers={"X-API-Key": "key-b"}).status_code == 200
 
 

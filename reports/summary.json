@@ -1,0 +1,30 @@
+{
+ "e7_unit_costs": {
+  "status": "ok",
+  "seconds": 103.9
+ },
+ "e1_autoscale": {
+  "status": "ok",
+  "seconds": 721.3
+ },
+ "e2_noisy_neighbour": {
+  "status": "ok",
+  "seconds": 482.0
+ },
+ "e3_metering": {
+  "status": "ok",
+  "seconds": 155.5
+ },
+ "e4_batch": {
+  "status": "ok",
+  "seconds": 50.4
+ },
+ "e5_canary": {
+  "status": "ok",
+  "seconds": 423.6
+ },
+ "e6_llm": {
+  "status": "error",
+  "seconds": 601.1
+ }
+}
